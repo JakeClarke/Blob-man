@@ -55,8 +55,8 @@ public class Player : MonoBehaviour {
 		// only ground if the player is above the object.
 		if(collision.contacts[0].normal.y > 0.5) {
 			onGround = true;
-			if(collision.gameObject.tag == "enemy") {
-				Debug.Log ("Player hit" + collision.gameObject.name);
+			if(collision.gameObject.tag == "Enemy") {
+				Debug.Log ("Player hit: " + collision.gameObject.name);
 				collision.gameObject.SendMessage("onHit");
 			}
 		}
