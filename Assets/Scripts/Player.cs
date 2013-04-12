@@ -51,10 +51,27 @@ public class Player : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision){
 		// Debug.Log (collision.gameObject.name);
-		onGround = true;
+		
+		// only ground if the player is above the object.
+		if(collision.contacts[0].normal.y > 0.5) {
+			onGround = true;
+			if(collision.gameObject.tag == "enemy") {
+				Debug.Log ("Player hit" + collision.gameObject.name);
+				collision.gameObject.SendMessage("onHit");
+			}
+		}
+		if(collision.gameObject.tag == "enemy") {
+			GameOver();
+		}
+		
 	}
 	
 	void OnCollisionExit() {
 		onGround = false;	
+	}
+	
+	void GameOver() {
+		// game over, man, game over.
+		Debug.Log ("Game over.");
 	}
 }
