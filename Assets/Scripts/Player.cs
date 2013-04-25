@@ -125,7 +125,13 @@ public class Player : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		
+		// Check to see if the player has fallen off the map
+		// and respawn him
+		if (transform.position.y < 0)
+		{
+			GameObject spawnPoint = GameObject.Find("SpawnPoint");
+			transform.position = spawnPoint.transform.position;
+		}
 	}
 	
 	public void ChangeModel(int model_type)
