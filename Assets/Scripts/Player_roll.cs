@@ -11,8 +11,6 @@ public class Player_roll : PlayerBase {
 	public float rightAngle = 270;
 	public float leftAngle = 90;
 	
-	private string direction = "right";
-	
 	void Start () {
 		base.Start();
 		
@@ -20,27 +18,11 @@ public class Player_roll : PlayerBase {
 		if (this.transform.eulerAngles.y < rightAngle)
 		{
 			rollInputSpeed = -rollInputSpeed;
-			direction = "left";
 		}
 	}
 	
 	void Update () {
-		
-		// Allow the player to nudge the rolling.
-		/*
-		if (Input.GetKey(KeyCode.RightArrow))
-		{	
-			this.rigidbody.AddForce(new Vector3(rollInputSpeed, 0, 0), ForceMode.Acceleration);
-		} 
-		else if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			this.rigidbody.AddForce(new Vector3(-rollInputSpeed, 0, 0), ForceMode.Acceleration);
-		}
-		
-		if(Input.GetKey(KeyCode.Space)) {
-			this.ToWalking();
-		}*/
-		
+			
 		this.rigidbody.AddForce(new Vector3(rollInputSpeed, 0, 0), ForceMode.Impulse);
 		rollDuration -= Time.deltaTime;
 		if (rollDuration <= 0)
@@ -59,7 +41,7 @@ public class Player_roll : PlayerBase {
 	
 	public void ToWalking() {
 		// Reset the rotation
-		float rotation = (direction == "left") ? leftAngle : rightAngle;
+		float rotation = (rollInputSpeed < 0) ? leftAngle : rightAngle;
 		this.transform.eulerAngles = new Vector3(0, rotation, 0);
 		
 		this.PlayerWalking = (GameObject)Instantiate(this.PlayerWalking, this.transform.position, this.transform.rotation);
