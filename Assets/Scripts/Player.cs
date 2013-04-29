@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : PlayerBase {
 	
 	public GameObject PlayerRolling;
 	
@@ -17,8 +17,7 @@ public class Player : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		CameraFollow camFollow = (CameraFollow)Camera.mainCamera.GetComponent("CameraFollow");
-		camFollow.target = this.transform;
+		base.Start();
 	}
 	
 	// Update is called once per frame

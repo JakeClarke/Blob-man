@@ -1,15 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player_roll : MonoBehaviour {
+public class Player_roll : PlayerBase {
 	
 	public GameObject PlayerWalking;
 	
 	public float rollInputSpeed = 0.5f;
 	
 	void Start () {
-		CameraFollow camFollow = (CameraFollow)Camera.mainCamera.GetComponent("CameraFollow");
-		camFollow.target = this.transform;
+		base.Start();
 	}
 	
 	void Update () {
@@ -33,10 +32,5 @@ public class Player_roll : MonoBehaviour {
 		this.PlayerWalking = (GameObject)Instantiate(this.PlayerWalking, this.transform.position, this.transform.rotation);
 		this.PlayerWalking.rigidbody.velocity = this.rigidbody.velocity;
 		Destroy(this.gameObject);
-	}
-	
-	void GameOver() {
-		// game over, man, game over.
-		Debug.Log ("Game over.");
 	}
 }
