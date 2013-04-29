@@ -15,6 +15,8 @@ public class Player : PlayerBase {
 	private bool rolling;
 	private float CameraDistanceY;
 	
+	private bool _blockToRoll = true;
+	
 	// Use this for initialization
 	void Start () {
 		base.Start();
@@ -58,8 +60,11 @@ public class Player : PlayerBase {
 		}
 		
 		// thinking about making it so the player has to go through a world element to switch to ball mode.
-		if(Input.GetKey(KeyCode.Space)) {
+		if(Input.GetKey(KeyCode.Space) && !this._blockToRoll) {
 			this.ToRolling();
+		}
+		else if(!Input.GetKey(KeyCode.Space)) {
+			_blockToRoll = false;
 		}
 	}
 	
