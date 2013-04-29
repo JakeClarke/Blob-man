@@ -8,7 +8,8 @@ public class Player_roll : MonoBehaviour {
 	public float rollInputSpeed = 0.5f;
 	
 	void Start () {
-		
+		CameraFollow camFollow = (CameraFollow)Camera.mainCamera.GetComponent("CameraFollow");
+		camFollow.target = this.transform;
 	}
 	
 	void Update () {

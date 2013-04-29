@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		CameraFollow camFollow = (CameraFollow)Camera.mainCamera.GetComponent("CameraFollow");
+		camFollow.target = this.transform;
 	}
 	
 	// Update is called once per frame
