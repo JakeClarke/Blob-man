@@ -6,4 +6,5 @@
 *.csproj
 *.unityproj
 *.sln
-desktop.ini
+*.pidb
+*.userprefsdesktop.ini
