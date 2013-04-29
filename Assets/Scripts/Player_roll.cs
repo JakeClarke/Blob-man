@@ -8,8 +8,20 @@ public class Player_roll : PlayerBase {
 	public float rollInputSpeed = 500;
 	public float rollDuration = 0.5f;
 	
+	public float rightAngle = 270;
+	public float leftAngle = 90;
+	
+	private string direction = "right";
+	
 	void Start () {
 		base.Start();
+		
+		// Check the direction of the player
+		if (this.transform.eulerAngles.y < rightAngle)
+		{
+			rollInputSpeed = -rollInputSpeed;
+			direction = "left";
+		}
 	}
 	
 	void Update () {
@@ -46,6 +58,10 @@ public class Player_roll : PlayerBase {
 	}
 	
 	public void ToWalking() {
+		// Reset the rotation
+		float rotation = (direction == "left") ? leftAngle : rightAngle;
+		this.transform.eulerAngles = new Vector3(0, rotation, 0);
+		
 		this.PlayerWalking = (GameObject)Instantiate(this.PlayerWalking, this.transform.position, this.transform.rotation);
 		this.PlayerWalking.rigidbody.velocity = this.rigidbody.velocity;
 		Destroy(this.gameObject);
