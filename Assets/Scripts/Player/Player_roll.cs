@@ -4,11 +4,15 @@ using System.Collections;
 public class Player_roll : PlayerBase {
 	
 	public GameObject PlayerWalking;
+	public Vector3 boostForce = new Vector3(30f, 10f, 0f);
 	
 	public float rollInputSpeed = 0.5f;
 	
+	private bool _blockToWalk = true;
+	
 	void Start () {
 		base.Start();
+		this.rigidbody.AddForce(boostForce, ForceMode.Impulse);
 	}
 	
 	void Update () {
@@ -23,8 +27,11 @@ public class Player_roll : PlayerBase {
 			this.rigidbody.AddForce(new Vector3(-rollInputSpeed, 0, 0), ForceMode.Acceleration);
 		}
 		
-		if(Input.GetKey(KeyCode.Space)) {
+		if(Input.GetKey(KeyCode.Space) && !_blockToWalk) {
 			this.ToWalking();
+		}
+		else if(!Input.GetKey(KeyCode.Space)) {
+			_blockToWalk = false;
 		}
 	}
 	
