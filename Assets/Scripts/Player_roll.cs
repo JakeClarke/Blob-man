@@ -38,6 +38,13 @@ public class Player_roll : PlayerBase {
 		
 	}
 	
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "Wall") {
+			collision.gameObject.SendMessage("onHit");	
+		}
+	}
+	
 	public void ToWalking() {
 		this.PlayerWalking = (GameObject)Instantiate(this.PlayerWalking, this.transform.position, this.transform.rotation);
 		this.PlayerWalking.rigidbody.velocity = this.rigidbody.velocity;

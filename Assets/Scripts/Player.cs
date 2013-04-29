@@ -80,7 +80,7 @@ public class Player : PlayerBase {
 			}
 		}
 		
-		if(collision.gameObject.tag == "enemy") {
+		if(collision.gameObject.tag == "Enemy") {
 			GameOver();
 		}
 		
