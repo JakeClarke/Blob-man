@@ -35,7 +35,7 @@ public class Player_roll : PlayerBase {
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == "Wall") {
-			collision.gameObject.SendMessage("onHit");	
+			// collision.gameObject.SendMessage("onHit");	
 		}
 	}
 	
