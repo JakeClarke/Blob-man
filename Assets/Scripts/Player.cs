@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		DetectGround();
 		if (Input.GetKey(KeyCode.RightArrow)){	
 			
 			if (transform.eulerAngles.y != rightAngle){
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour {
 		
 		// only ground if the player is above the object.
 		if(collision.contacts[0].normal.y > 0.5) {
-			onGround = true;
+			//onGround = true;
 			if(collision.gameObject.tag == "Enemy") {
 				Debug.Log ("Player hit: " + collision.gameObject.name);
 				collision.gameObject.SendMessage("onHit");
@@ -73,5 +73,14 @@ public class Player : MonoBehaviour {
 	void GameOver() {
 		// game over, man, game over.
 		Debug.Log ("Game over.");
+	}
+	
+	void DetectGround() {
+		Vector3 rayOrigin = this.transform.position + new Vector3(0f, 0.1f, 0f);
+		Vector3 rayDir = new Vector3(0,-1,0);
+		float rayLength = 1f;
+		onGround = Physics.Raycast(rayOrigin, rayDir, rayLength);
+		Debug.Log (onGround);
+		Debug.DrawRay (rayOrigin, rayDir * rayLength, Color.red);
 	}
 }
