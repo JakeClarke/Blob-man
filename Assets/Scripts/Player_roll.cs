@@ -6,7 +6,7 @@ public class Player_roll : PlayerBase {
 	public GameObject PlayerWalking;
 	
 	public float rollInputSpeed = 500;
-	public float rollDuration = 1;
+	public float rollDuration = 0.5f;
 	
 	void Start () {
 		base.Start();
