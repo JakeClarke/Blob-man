@@ -7,4 +7,5 @@
 *.unityproj
 *.sln
 *.pidb
-*.userprefsdesktop.ini
+*.userprefs
+desktop.ini
