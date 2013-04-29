@@ -4,13 +4,10 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour {
 	
 	public Transform target;
-	public float distance = 10;
-	public float moveAmount = 2;
-	public float fastForward = 12;
-	public float fastForwardDelay = 1;
+	public Vector3 offset = new Vector3(0f, 0f, -100f);
 	
 	
-	private bool moveRight = true;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -18,31 +15,12 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 	void Update(){
-		if (Input.GetKeyDown(KeyCode.RightArrow)){
-			moveRight = true;
-		} else if (Input.GetKeyDown(KeyCode.LeftArrow)){
-			moveRight = false;	
-		}
+		
 	}
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		if (moveRight){
-			if (transform.position.x - target.position.x < distance){
-				if (transform.position.x - target.position.x < distance - fastForwardDelay){
-					transform.Translate(fastForward * Time.deltaTime, 0, 0);	
-				} else {
-					transform.Translate(moveAmount * Time.deltaTime, 0, 0);	
-				}
-			}		
-		} else {
-			if (target.position.x - transform.position.x < distance){
-				if (target.position.x - transform.position.x < distance - fastForwardDelay){
-					transform.Translate(-fastForward * Time.deltaTime, 0, 0);	
-				} else {
-					transform.Translate(-moveAmount * Time.deltaTime, 0, 0);	
-				}
-			}	
-		}
+		this.transform.position = target.position + offset;
+		this.transform.LookAt(new Vector3(target.position.x + offset.x, target.position.y + offset.y, target.position.z));
 	}
 }
