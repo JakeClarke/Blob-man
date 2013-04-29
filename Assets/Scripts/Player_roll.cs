@@ -5,7 +5,8 @@ public class Player_roll : PlayerBase {
 	
 	public GameObject PlayerWalking;
 	
-	public float rollInputSpeed = 0.5f;
+	public float rollInputSpeed = 500;
+	public float rollDuration = 1;
 	
 	void Start () {
 		base.Start();
@@ -14,6 +15,7 @@ public class Player_roll : PlayerBase {
 	void Update () {
 		
 		// Allow the player to nudge the rolling.
+		/*
 		if (Input.GetKey(KeyCode.RightArrow))
 		{	
 			this.rigidbody.AddForce(new Vector3(rollInputSpeed, 0, 0), ForceMode.Acceleration);
@@ -25,7 +27,15 @@ public class Player_roll : PlayerBase {
 		
 		if(Input.GetKey(KeyCode.Space)) {
 			this.ToWalking();
+		}*/
+		
+		this.rigidbody.AddForce(new Vector3(rollInputSpeed, 0, 0), ForceMode.Impulse);
+		rollDuration -= Time.deltaTime;
+		if (rollDuration <= 0)
+		{
+			this.ToWalking();	
 		}
+		
 	}
 	
 	public void ToWalking() {
