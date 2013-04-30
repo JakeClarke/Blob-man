@@ -11,7 +11,7 @@ public class Player_roll : PlayerBase {
 	public float rightAngle = 270;
 	public float leftAngle = 90;
 	
-	void Start () {
+	new void Start () {
 		base.Start();
 		
 		// Check the direction of the player

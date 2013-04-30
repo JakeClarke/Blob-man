@@ -7,8 +7,8 @@ public class Player : PlayerBase {
 	
 	public float speed = 2;
 	public float jumpAmount = 10f;
-	public float rightAngle = 270;
-	public float leftAngle = 90;
+	private const float _RIGHTANGLE = 270;
+	private const float _LEFTANGLE = 90;
 	
 	public float enemyHeadBounce = 10f;
 	
@@ -20,52 +20,36 @@ public class Player : PlayerBase {
 	private bool _blockToRoll = true;
 	
 	// Use this for initialization
-	void Start () {
+	new void Start () {
 		base.Start();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// -----------------------------------------------------
-		//
-		//		Movements
-		//
-		// -----------------------------------------------------
 		
-		if (Input.GetKey(KeyCode.RightArrow))
-		{	
-			
-			if (transform.eulerAngles.y != rightAngle)
-			{
-				transform.eulerAngles = new Vector3(0, rightAngle, 0);
-			}
-			
-			
-			transform.Translate(0, 0, - speed * Time.deltaTime);
-			
-		} 
-		else if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			
-			if (transform.eulerAngles.y != leftAngle){
-				transform.eulerAngles = new Vector3(0, leftAngle, 0);
-			}
-			
-			transform.Translate(0, 0, - speed * Time.deltaTime);
+		// rotate the player model
+		if(Input.GetAxis("Horizontal") < 0) {
+			transform.eulerAngles = new Vector3(0, _LEFTANGLE, 0);
+		}
+		else if(Input.GetAxis("Horizontal") > 0) {
+			transform.eulerAngles = new Vector3(0, _RIGHTANGLE, 0);
 		}
 		
-		if (Input.GetKey(KeyCode.UpArrow) && onGround == true)
+		if (Input.GetButton("Jump") && onGround == true)
 		{
 			//transform.Translate(0, jumpAmount * Time.deltaTime, 0);
 			rigidbody.AddForce(new Vector3(0, jumpAmount, 0), ForceMode.Impulse);
 			onGround = false;
 		}
 		
+		// move the player.
+		transform.Translate(0, 0, -Mathf.Abs((-speed * Time.deltaTime) * Input.GetAxis("Horizontal")));
+		
 		// thinking about making it so the player has to go through a world element to switch to ball mode.
-		if(Input.GetKey(KeyCode.Space) && !this._blockToRoll) {
+		if(Input.GetButton("Fire1") && !this._blockToRoll) {
 			this.ToRolling();
 		}
-		else if(!Input.GetKey(KeyCode.Space)) {
+		else if(!Input.GetButton("Fire1")) {
 			_blockToRoll = false;
 		}
 	}
