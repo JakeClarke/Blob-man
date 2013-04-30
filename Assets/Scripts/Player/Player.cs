@@ -10,6 +10,8 @@ public class Player : PlayerBase {
 	public float rightAngle = 270;
 	public float leftAngle = 90;
 	
+	public float enemyHeadBounce = 10f;
+	
 	
 	private bool onGround;
 	private bool rolling;
@@ -81,11 +83,11 @@ public class Player : PlayerBase {
 			//onGround = true;
 			if(collision.gameObject.tag == "Enemy") {
 				Debug.Log ("Player hit: " + collision.gameObject.name);
+				this.rigidbody.AddForce(0f, this.enemyHeadBounce, 0f, ForceMode.Impulse);
 				collision.gameObject.SendMessage("onHit");
 			}
 		}
-		
-		if(collision.gameObject.tag == "Enemy") {
+		else if(collision.gameObject.tag == "Enemy") {
 			GameOver();
 		}
 		
@@ -95,11 +97,6 @@ public class Player : PlayerBase {
 		this.PlayerRolling = (GameObject)Instantiate(this.PlayerRolling, this.transform.position, this.transform.rotation);
 		this.PlayerRolling.rigidbody.velocity = this.rigidbody.velocity;
 		Destroy(this.gameObject);
-	}
-	
-	void GameOver() {
-		// game over, man, game over.
-		Debug.Log ("Game over.");
 	}
 	
 	void DetectGround() {
