@@ -8,19 +8,19 @@ public class Donut : MonoBehaviour {
 
  
 	static public int score = 0;
-    public Transform target;
 	
-	void Update (){
+	void Update () {
 		
-	print (score);
+		print (score);
 	}
-    void OnCollisionEnter(Collision target){
-
-        score += 10;
+	
+	
+    void OnCollisionEnter(Collision col) {
 		
-		
-        Destroy(gameObject);
-
+		if (col.collider.tag == "Player") {
+			score += 10;
+			Destroy(gameObject);
+		}
     }
 	
 
