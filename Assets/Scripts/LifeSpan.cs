@@ -14,14 +14,6 @@ public class LifeSpan : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-		activeTime += Time.deltaTime;
-		if(this.activeTime > this.Lifespan)
-			Destroy(gameObject);
+		Destroy (this.gameObject, Lifespan);
 	}
 }
