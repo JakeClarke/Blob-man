@@ -10,7 +10,6 @@ public class LifeSpan : MonoBehaviour {
 	/// The lifespan of the object.
 	/// </summary>
 	public float Lifespan = 10f;
-	private float activeTime = 0f;
 	
 	// Use this for initialization
 	void Start () {
