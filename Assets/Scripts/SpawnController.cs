@@ -20,7 +20,12 @@ public class SpawnController : MonoBehaviour {
 	/// </summary>
 	void RespawnPlayer() {
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
-		player.transform.position = activeSpawn.transform.position;
+		if(activeSpawn) {
+			player.transform.position = activeSpawn.transform.position;
+		}
+		else { 
+			Application.LoadLevel(Application.loadedLevel);	
+		}
 	}
 	
 	/// <summary>
