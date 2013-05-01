@@ -15,9 +15,9 @@ public class Donut : MonoBehaviour {
 		scoreController = scoreEnt.GetComponent("ScoreController") as ScoreController;
 	}
 	
-    void OnCollisionEnter(Collision col) {
+    void OnTriggerEnter(Collider col) {
 		
-		if (col.collider.tag == "Player") {
+		if (col.tag == "Player") {
 			scoreController.Score = scoreController.Score + scoreGained;
 			Destroy(gameObject);
 		}
