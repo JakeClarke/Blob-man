@@ -72,7 +72,7 @@ public class Player : PlayerBase {
 			}
 		}
 		else if(collision.gameObject.tag == "Enemy") {
-			GameOver();
+			GameOver("Burger people bad!");
 		}
 		
 	}

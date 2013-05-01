@@ -6,22 +6,17 @@ using System.Collections;
 
 public class Donut : MonoBehaviour {
 	
-	private ScoreController scoreController;
 	
-	public float scoreGained = 20f;
+	public int scoreGained = 20;
 	
 	void Start () {
-		GameObject scoreEnt = GameObject.FindGameObjectWithTag("Score");
-		scoreController = scoreEnt.GetComponent("ScoreController") as ScoreController;
 	}
 	
     void OnTriggerEnter(Collider col) {
 		
 		if (col.tag == "Player") {
-			scoreController.Score = scoreController.Score + scoreGained;
+			col.SendMessage ("AddScore", scoreGained);
 			Destroy(gameObject);
 		}
     }
-	
-
 }

@@ -8,19 +8,35 @@ public class PlayerBase : MonoBehaviour {
 	/// </summary>
 	public string GameOverLevel = "GameOver";
 	
+	private ScoreController _scoreController;
+	
 	/// <summary>
 	/// Default player initialisation code.
 	/// </summary>
 	public void Start() {
-		CameraFollow camFollow = (CameraFollow)Camera.mainCamera.GetComponent("CameraFollow");
-		camFollow.target = this.transform;	
+		CameraFollow camFollow = Camera.mainCamera.GetComponent("CameraFollow") as CameraFollow;
+		camFollow.target = this.transform;
+		
+		GameObject scoreEnt = GameObject.FindGameObjectWithTag("Score");
+		_scoreController = scoreEnt.GetComponent("ScoreController") as ScoreController;
 	}
 	
 	/// <summary>
 	/// Loads the game over level.
 	/// </summary>
-	public void GameOver() {
+	public void GameOver(string reason = "") {
+		this._scoreController.GameOverReason = reason;
 		Debug.Log ("Game over.");
 		Application.LoadLevel(GameOverLevel);
+	}
+	
+	/// <summary>
+	/// Adds the points.
+	/// </summary>
+	/// <param name='scoreToAdd'>
+	/// Score to add.
+	/// </param>
+	public void AddScore(int scoreToAdd) {
+		_scoreController.Score += scoreToAdd;
 	}
 }

@@ -30,7 +30,12 @@ public class ScoreController : MonoBehaviour {
 	/// <value>
 	/// The score.
 	/// </value>
-	public float Score {
+	public int Score {
+		get;
+		set;
+	}
+	
+	public string GameOverReason {
 		get;
 		set;
 	}
