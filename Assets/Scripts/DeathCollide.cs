@@ -7,6 +7,7 @@ public class DeathCollide : MonoBehaviour {
 		if(collision.collider.tag == "Player") {
 			collider.collider.SendMessage("GameOver");
 		}
-		Destroy(collision.collider.gameObject);
+		else
+			Destroy(collision.collider.gameObject);
 	}
 }
