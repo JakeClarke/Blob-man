@@ -7,6 +7,7 @@ public class PlayerBase : MonoBehaviour {
 	/// The game over level.
 	/// </summary>
 	public string GameOverLevel = "GameOver";
+	public int lives = 3;
 	
 	private ScoreController _scoreController;
 	
@@ -25,9 +26,18 @@ public class PlayerBase : MonoBehaviour {
 	/// Loads the game over level.
 	/// </summary>
 	public void GameOver(string reason = "") {
-		this._scoreController.GameOverReason = reason;
-		Debug.Log ("Game over.");
-		Application.LoadLevel(GameOverLevel);
+		lives--;
+		
+		if (lives <= 0 )
+		{
+			this._scoreController.GameOverReason = reason;
+			Debug.Log ("Game over.");
+			Application.LoadLevel(GameOverLevel);
+		}
+		else
+		{
+			// Respawn to the last checkpoint	
+		}
 	}
 	
 	/// <summary>
