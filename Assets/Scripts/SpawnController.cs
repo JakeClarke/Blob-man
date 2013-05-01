@@ -8,18 +8,26 @@ public class SpawnController : MonoBehaviour {
 	/// </summary>
 	public GameObject activeSpawn;
 	public int lives = 3;
-	static public int deathPenalty = -10;
+	public int deathPenalty = -10;
+	
+	public string GameOverLevel = "GameOver";
 	
 	private ScoreController _scoreController;
+	
+	void Awake () {
+		// prevent there from being more then one of these state managers in the level at once.
+		if (GameObject.FindGameObjectsWithTag("Score").Length > 1) {
+			Destroy (this.gameObject);
+		}	
+	}
 
 	// Use this for initialization
 	void Start () {
 		if (this.activeSpawn != null) {
 			activeSpawn.SendMessage("SetActive", true);
 		}
-		
-		GameObject scoreEnt = GameObject.FindGameObjectWithTag("Score");
-		_scoreController = scoreEnt.GetComponent("ScoreController") as ScoreController;
+
+		_scoreController = this.gameObject.GetComponent("ScoreController") as ScoreController;
 	}
 	
 	/// <summary>
@@ -32,7 +40,7 @@ public class SpawnController : MonoBehaviour {
 		{	
 			this._scoreController.GameOverReason = reason;
 			Debug.Log ("Game over.");
-			// Application.LoadLevel(GameOverLevel);
+			Application.LoadLevel(GameOverLevel);
 		}
 		else
 		{
