@@ -7,24 +7,42 @@ public class SpawnController : MonoBehaviour {
 	/// The active spawn, exposed only for the editor. DO NOT CHANGE IN CODE.
 	/// </summary>
 	public GameObject activeSpawn;
+	public int lives = 3;
+	static public int deathPenalty = -10;
+	
+	private ScoreController _scoreController;
 
 	// Use this for initialization
 	void Start () {
 		if (this.activeSpawn != null) {
 			activeSpawn.SendMessage("SetActive", true);
 		}
+		
+		GameObject scoreEnt = GameObject.FindGameObjectWithTag("Score");
+		_scoreController = scoreEnt.GetComponent("ScoreController") as ScoreController;
 	}
 	
 	/// <summary>
 	/// Respawns the player.
 	/// </summary>
-	void RespawnPlayer() {
+	void RespawnPlayer(string reason) {
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
-		if(activeSpawn) {
-			player.transform.position = activeSpawn.transform.position;
+		
+		if (lives-- <= 0)
+		{	
+			this._scoreController.GameOverReason = reason;
+			Debug.Log ("Game over.");
+			// Application.LoadLevel(GameOverLevel);
 		}
-		else { 
-			Application.LoadLevel(Application.loadedLevel);	
+		else
+		{
+			this._scoreController.Score += deathPenalty;
+			if(activeSpawn) {
+				player.transform.position = activeSpawn.transform.position;
+			}
+			else { 
+				Application.LoadLevel(Application.loadedLevel);	
+			}
 		}
 	}
 	
@@ -41,4 +59,5 @@ public class SpawnController : MonoBehaviour {
 		if(activeSpawn != null)
 			activeSpawn.SendMessage("SetActive", true);
 	}
+
 }
