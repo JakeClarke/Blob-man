@@ -10,7 +10,8 @@ public class SpawnController : MonoBehaviour {
 	public int lives = 3;
 	public int deathPenalty = -10;
 	
-	public string GameOverLevel = "GameOver";
+	public string gameOverLevel = "GameOver";
+	public string levelCompleteMessage = "Level complete!";
 	
 	private ScoreController _scoreController;
 	private int _checkPointScore = 0;
@@ -36,14 +37,14 @@ public class SpawnController : MonoBehaviour {
 	/// <summary>
 	/// Respawns the player.
 	/// </summary>
-	void RespawnPlayer(string reason) {
+	public void RespawnPlayer(string reason) {
 		_movePlayerToSpawn = false;
 		
 		if (lives-- <= 0)
 		{	
 			this._scoreController.GameOverReason = reason;
 			Debug.Log ("Game over.");
-			Application.LoadLevel(GameOverLevel);
+			Application.LoadLevel(gameOverLevel);
 		}
 		else
 		{
@@ -59,13 +60,19 @@ public class SpawnController : MonoBehaviour {
 		}
 	}
 	
+	public void LevelComplete() {
+		this._scoreController.GameOverReason = this.levelCompleteMessage;
+		Debug.Log ("Level complete!");
+		Application.LoadLevel(gameOverLevel);
+	}
+	
 	/// <summary>
 	/// Sets the active spawn.
 	/// </summary>
 	/// <param name='newActiveSpawn'>
 	/// New active spawn.
 	/// </param>
-	void SetActiveSpawn(GameObject newActiveSpawn) {
+	public void SetActiveSpawn(GameObject newActiveSpawn) {
 		if(activeSpawn != null)
 			activeSpawn.SendMessage("SetActive", false);
 		activeSpawn = newActiveSpawn;
@@ -78,6 +85,7 @@ public class SpawnController : MonoBehaviour {
 		if(this._movePlayerToSpawn) {
 			GameObject player = GameObject.FindGameObjectWithTag("Player");
 			player.transform.position = _spawnLocation;
+			_movePlayerToSpawn = false;
 		}
     }
 }
