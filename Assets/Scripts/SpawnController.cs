@@ -13,6 +13,9 @@ public class SpawnController : MonoBehaviour {
 	public string GameOverLevel = "GameOver";
 	
 	private ScoreController _scoreController;
+	private int _checkPointScore = 0;
+	private Vector3 _spawnLocation;
+	private bool _movePlayerToSpawn = false;
 	
 	void Awake () {
 		// prevent there from being more then one of these state managers in the level at once.
@@ -34,7 +37,7 @@ public class SpawnController : MonoBehaviour {
 	/// Respawns the player.
 	/// </summary>
 	void RespawnPlayer(string reason) {
-		GameObject player = GameObject.FindGameObjectWithTag("Player");
+		_movePlayerToSpawn = false;
 		
 		if (lives-- <= 0)
 		{	
@@ -44,12 +47,14 @@ public class SpawnController : MonoBehaviour {
 		}
 		else
 		{
-			this._scoreController.Score += deathPenalty;
+			this._scoreController.Score = this._checkPointScore + deathPenalty;
 			if(activeSpawn) {
-				player.transform.position = activeSpawn.transform.position;
+				_spawnLocation = activeSpawn.transform.position;
+				_movePlayerToSpawn = true;
+				Application.LoadLevel(Application.loadedLevel);
 			}
 			else { 
-				Application.LoadLevel(Application.loadedLevel);	
+				Application.LoadLevel(Application.loadedLevel);
 			}
 		}
 	}
@@ -64,8 +69,15 @@ public class SpawnController : MonoBehaviour {
 		if(activeSpawn != null)
 			activeSpawn.SendMessage("SetActive", false);
 		activeSpawn = newActiveSpawn;
+		this._checkPointScore = this._scoreController.Score;
 		if(activeSpawn != null)
 			activeSpawn.SendMessage("SetActive", true);
 	}
-
+	
+	void OnLevelWasLoaded(int level) {
+		if(this._movePlayerToSpawn) {
+			GameObject player = GameObject.FindGameObjectWithTag("Player");
+			player.transform.position = _spawnLocation;
+		}
+    }
 }

@@ -1,14 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerBase : MonoBehaviour {
-	
-	/// <summary>
-	/// The game over level.
-	/// </summary>
-	public string GameOverLevel = "GameOver";
+public abstract class PlayerBase : MonoBehaviour {
 
-	
 	private ScoreController _scoreController;
 	
 	/// <summary>
